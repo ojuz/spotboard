@@ -114,6 +114,7 @@ function(Spotboard, $)  {
         var $df = new $.Deferred();
 
         var fed = runfeeder.feed(1, function(run, remainCount) {
+            console.log("hi~");
             Spotboard.Manager.displayedContestTime = Spotboard.runfeeder.getContestTime(); // TODO 중복
             $(Spotboard.runfeeder).trigger('change');
 
@@ -132,7 +133,7 @@ function(Spotboard, $)  {
 
             // 애니메이션을 생성한다.
             var animation = updateAnimationFactory(run, remainCount);
-
+            
             // 애니메이션에서 팀이 flip
             var fnUpdateTeamRank = function() {
                 $("#team-list > .team").each( function() {
@@ -289,7 +290,7 @@ function(Spotboard, $)  {
 
                     fn.call(runfeeder, data, function filter(r) {
                         // 이미 맞은 문제는 run 피드하지 않음
-                        if(contest.getTeamStatus(r.getTeam()).getProblemStatus(r.getProblem()).isAccepted())
+                        if(contest.getTeamStatus(r.getTeam()).getProblemStatus(r.getProblem()).isReallyAccepted())
                             return false;
                         // 제외되는 팀의 런은 피드하지 않음
                         if(Spotboard.Manager.isTeamExcluded(r.getTeam()))

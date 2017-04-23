@@ -20,6 +20,9 @@ module.exports = function (grunt) {
         },
         coffee: {
             compile: {
+                files: {
+                    'src/js/contest.js': 'src/js/contest.coffee'
+                }
             },
         },
         requirejs: {

@@ -2,12 +2,10 @@
  * Contest Configuration
  */
 
-feed_server_path = './sample/';
-
 config =
 {
     // environment: 'production' or 'develop'
-    environment : 'develop',
+    environment : 'production',
 
     /**
      * The following paths should be accessible:
@@ -23,7 +21,7 @@ config =
         'events_ws' : (feed_server_path + 'events')
             .replace('http://', 'ws://')
             .replace('https://', 'wss://'),
-        'award_slide.json' :'./sample/award_slide.json'
+        'award_slide.json' :feed_server_path + '/award_slide.json'
     },
 
     /**
@@ -111,6 +109,7 @@ config =
     //foreign_teams : [ 2000, 2001 ],
     foreign_teams : function(team) {
         /* an example config */
+        /*
         var foreign_teams_list = [2000, 2001];
         var foreign_affiliations = [
             "Peking University",
@@ -125,7 +124,7 @@ config =
         var teamId = team.getId(),
             affiliation = team.getGroup();
         if (foreign_teams_list.indexOf(teamId) >= 0) return true;
-        if (foreign_affiliations.indexOf(affiliation) >= 0) return true;
+        if (foreign_affiliations.indexOf(affiliation) >= 0) return true;*/
         return false;
     },
 
@@ -152,11 +151,11 @@ config =
      * according to the number of problems solved.
      */
     award_animation_speeds: [
-      { solved: 10, fastFlipSpeed: 1200, slowFlipSpeed: 2000, utuSpeedFunc: function(up_cnt) { return Math.min(500 + up_cnt * 100, 2000); } },
-      { solved: 9,  fastFlipSpeed: 800,  slowFlipSpeed: 1200, utuSpeedFunc: function(up_cnt) { return Math.min(500 + up_cnt * 100, 2000); } },
-      { solved: 7,  fastFlipSpeed: 400,  slowFlipSpeed: 600,  utuSpeedFunc: function(up_cnt) { return Math.min(500 + up_cnt * 100, 2000); } },
-      { solved: 3,  fastFlipSpeed: 200,  slowFlipSpeed: 300,  utuSpeedFunc: function(up_cnt) { return Math.min(250 + up_cnt * 50, 3000); } },
-      { solved: 0,  fastFlipSpeed: 200,  slowFlipSpeed: 300,  utuSpeedFunc: function(up_cnt) { return Math.min(150 + up_cnt * 30, 1000); } }
+      { solved: 10*4, fastFlipSpeed: 1200, slowFlipSpeed: 2000, utuSpeedFunc: function(up_cnt) { return Math.min(500 + up_cnt * 100, 2000); } },
+      { solved: 9*4,  fastFlipSpeed: 800,  slowFlipSpeed: 1200, utuSpeedFunc: function(up_cnt) { return Math.min(500 + up_cnt * 100, 2000); } },
+      { solved: 7*4,  fastFlipSpeed: 400,  slowFlipSpeed: 600,  utuSpeedFunc: function(up_cnt) { return Math.min(500 + up_cnt * 100, 2000); } },
+      { solved: 3*4,  fastFlipSpeed: 200,  slowFlipSpeed: 300,  utuSpeedFunc: function(up_cnt) { return Math.min(250 + up_cnt * 50, 3000); } },
+      { solved: 0*4,  fastFlipSpeed: 200,  slowFlipSpeed: 300,  utuSpeedFunc: function(up_cnt) { return Math.min(150 + up_cnt * 30, 1000); } }
     ],
 
     /**

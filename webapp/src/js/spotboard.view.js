@@ -41,12 +41,14 @@ function($, Handlebars, Spotboard) {
         var contest = Spotboard.contest;
 
         var problems = contest.getProblems();
+        var max_total_score = contest.getMaxTotalScore();
+
         var hsv_from = [-2/360, 0.96, 0.31];
         var hsv_to = [105/360, 0.96, 0.31];
         var $style= $('<style type="text/css" id="problem-balloon-style"></style>');
-        for (var i = 0; i <= problems.length;i++)
+        for (var i = 0; i <= max_total_score;i++)
         {
-            var ratio = i / problems.length;
+            var ratio = i / max_total_score;
             var h = hsv_from[0] * (1 - ratio) + hsv_to[0] * ratio;
             var s = hsv_from[1] * (1 - ratio) + hsv_to[1] * ratio;
             var v = hsv_from[2] * (1 - ratio) + hsv_to[2] * ratio;
@@ -386,16 +388,31 @@ function($, Handlebars, Spotboard) {
             var problem = problems[index];
             var problemStat = teamStatus.getProblemStatus(problem);
 
-            $(this).removeClass('solved failed pending');
+            $(this).removeClass('solved failed pending partially_correct');
             if(problemStat.isAccepted()) {
                 // solved the problem, add balloon
-                $(this).addClass('solved');
+                if(!problemStat.isPartiallyCorrect())
+                    $(this).addClass('solved');
+                else
+                    $(this).addClass('partially_correct');
                 if($team.find('.balloon.problem-' + index).length == 0)
                     problemsNewlySolved.push(problemStat);
 
                 // tool text for the run
                 // NOTE: if first solved, additional suffix follows. (see .solved-first:after CSS)
-                var penalty_string = 'Solved at ' + problemStat.getSolvedTime() + ' min.';
+                var penalty_string = "";
+                if(problemStat.isPartiallyCorrect()) {
+                    var my_score = problemStat.getScore();
+                    penalty_string += "Got " + my_score + " point"
+                    if(my_score != 1) {
+                        penalty_string += "s";
+                    }
+                    penalty_string += ' at '; 
+                }else {
+                    penalty_string += "Solved at "
+                }
+
+                penalty_string += problemStat.getSolvedRun().time + ' min.';
                 $(this).attr('data-balloon', penalty_string);
                 $(this).attr('data-balloon-pos', 'down');
 
@@ -405,7 +422,7 @@ function($, Handlebars, Spotboard) {
 
                     if(problemSummary.isFirstSolved(problemStat)) {
                         $(this).addClass('solved-first')
-                        var solvedFirstTime = problemStat.getSolvedTime();
+                        var solvedFirstTime = problemStat.getReallySolvedTime();
 
                         // invalidate all other previous first-solved runs
                         // TODO how to do it elegantly without accessing via jQuery?
@@ -414,7 +431,7 @@ function($, Handlebars, Spotboard) {
                             var teamIdOther = $(this).attr('data-team-id');
                             var problemStatOther = contest.getTeamStatus(teamIdOther).getProblemStatus(problem);
                             // TODO remove this business logic into somewhere proper (e.g. contest.coffee)
-                            if(problemStatOther.getSolvedTime() != solvedFirstTime)
+                            if(problemStatOther.getReallySolvedTime() != solvedFirstTime)
                                 $(this).removeClass('solved-first');
                         });
                     }
@@ -439,7 +456,8 @@ function($, Handlebars, Spotboard) {
         } );
 
         $.each(problemsNewlySolved, function(idx, problemStat) {
-            Spotboard.View.addBalloon($team, problemStat);
+            if(Spotboard.contest.enable_balloon)
+                Spotboard.View.addBalloon($team, problemStat);
         } );
 
     };
@@ -458,11 +476,12 @@ function($, Handlebars, Spotboard) {
 
     Spotboard.View.updateSolvedCountVisibility = function() {
         var contest = Spotboard.contest,
-            problems = contest.getProblems();
+            problems = contest.getProblems(),
+            max_total_score = contest.getMaxTotalScore();
         var $teamlist = $('#team-list');
 
         $('.solved-count').removeClass('first last');
-        for(var i = 0; i <= problems.length; ++ i) {
+        for(var i = 0; i <= max_total_score; ++ i) {
             var group = $teamlist.find('.team:not(.hidden).solved-' + i);
             if(!group.length) continue;
             group.first().find('.solved-count').text('' + i).addClass('first');

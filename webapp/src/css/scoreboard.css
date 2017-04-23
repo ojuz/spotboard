@@ -438,6 +438,56 @@ div.team {
     vertical-align: super;
 }
 
+.score {
+    display: block;
+    float: left;
+    height: 100%;
+
+    overflow: hidden;
+    width: 1.0em;
+    padding-left: 0.1em;
+    font-weight: 600;
+
+    vertical-align: bottom;
+    text-align: right;
+    padding-right: 0.2em;
+
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+
+    color: transparent;
+    text-shadow: none;
+
+    line-height: 140%;
+    font-size: 1.4em;
+    letter-spacing: -0.1em;
+    
+    margin-right: 0.3em;
+}
+
+.score.first {
+    color: white;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.5), 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.team.target .score, 
+#wrapper:not(.award-mode) .team:hover .score {
+    background-color: transparent !important;
+    color: black;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.5), 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.score.first {
+    border-top-right-radius: 0.3em;
+}
+
+.score.last {
+    border-bottom-right-radius: 0.3em;
+}
+
+
 .solved-count {
     display: block;
     float: left;
@@ -551,6 +601,10 @@ div.team {
 #dashboard .run.accepted {
     background: #e9ffd9 no-repeat 10px 50%;
     border: 1px solid #a6ca8a;
+}
+#dashboard .run.partially_correct {
+    background: #f9ffef no-repeat 10px 50%;
+    border: 1px solid #c7dea1;
 }
 #dashboard .run.pending {
     background: #fff8c4 no-repeat 10px 50%;
@@ -802,7 +856,28 @@ div.results:after {
 
     height: 3.3333em;
     border: 1px solid white;
-    width: 2.3em;
+
+    /* CHANGED BY OJUZ */
+    /* CHANGED BY OJUZ */
+    /* CHANGED BY OJUZ */
+    /* CHANGED BY OJUZ */
+    /* CHANGED BY OJUZ */
+    /* CHANGED BY OJUZ */
+    /* CHANGED BY OJUZ */
+    /* CHANGED BY OJUZ */
+    /* CHANGED BY OJUZ */
+    /* CHANGED BY OJUZ */    /* CHANGED BY OJUZ */    /* CHANGED BY OJUZ */
+    width: 2.9em;
+    /* CHANGED BY OJUZ */
+    /* CHANGED BY OJUZ */
+    /* CHANGED BY OJUZ */
+    /* CHANGED BY OJUZ */
+    /* CHANGED BY OJUZ */
+    /* CHANGED BY OJUZ */
+    /* CHANGED BY OJUZ */
+    /* CHANGED BY OJUZ */
+    /* CHANGED BY OJUZ */
+    /* CHANGED BY OJUZ */    /* CHANGED BY OJUZ */    /* CHANGED BY OJUZ */
     font-size: 0.6em;
     line-height: 450%;
     letter-spacing: -1px;
@@ -935,6 +1010,13 @@ div.results:after {
     /*overflow: hidden;*/
 }
 
+.partially_correct {
+    background-color: #a1ab0e;
+    background: linear-gradient( 180deg, rgba(198, 185, 28, 0.75), rgb(112, 99, 10) );
+    /* overflow: hidden; */
+}
+
+
 .solved.solved-first {
     /* first solve emphasize */
     background-color: rgb(47, 158, 68);
@@ -946,6 +1028,11 @@ div.results:after {
 }
 
 .solved b:before {
+    color: white;
+    text-shadow: 0 0 1px rgba(255,255,255,0.5), 0 0 2.5px rgba(255,255,255,0.2);
+}
+
+.partially_correct b:before {
     color: white;
     text-shadow: 0 0 1px rgba(255,255,255,0.5), 0 0 2.5px rgba(255,255,255,0.2);
 }
@@ -981,7 +1068,7 @@ div.results:after {
     display: block;
     float: right;
     padding-top: 0.3em;
-    width: 3.5em;
+    width: 5em;
     text-align: right;
 }
 

@@ -193,6 +193,7 @@ function($, Spotboard) {
             // 일단 임시방편으로 포커스를 다시 잡는데 대략 구조가 좋지 않으므로 개선이 필요함;
             // 여기서 포커스 잡으면 scrollTo 도 해버리는 게 문제군 OTL
             $team.addClass('target'); // WTF FIXME
+            console.log('??!!');
 
             // 후속 처리
             // 만약 맞아서 올라갔으면 포커스를 끔.

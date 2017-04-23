@@ -38,7 +38,6 @@ function($, Spotboard) {
         Spotboard.Dashboard.display();
     else Spotboard.Dashboard.hide();
 
-    // template
     Spotboard.JST['team-run-event'] = Handlebars.compile('\
                 <li class="run {{status}}" data-runid="{{runId}}">\
                     <div class="balloon problem-{{problemId}}"></div>\
@@ -48,7 +47,6 @@ function($, Spotboard) {
                     ({{minute}} min.)\
                 </li>\
 '.trim());
-
     Spotboard.Dashboard.createRunNotification = function(run) {
         if(!run) return null;
 
@@ -58,10 +56,31 @@ function($, Spotboard) {
         var teamName = run.getTeam().getName(),
             problemName = run.getProblem().getName();
 
+        // template
+        Spotboard.JST['team-run-event'] = Handlebars.compile('\
+                    <li class="run {{status}}" data-runid="{{runId}}">' +
+                        (contest.enable_balloon ? '<div class="balloon problem-{{problemId}}"></div>' : '') +
+                        'Team <span class="team">{{teamName}}</span>\
+                        {{teamDisplayAction}}\
+                        <span class="problem">{{problemName}}</span>!\
+                        ({{minute}} min.)\
+                    </li>\
+'.trim());
+
         var status, judgeStatus, teamDisplayAction;
         if(run.isJudgedYes()) {
-            status = 'accepted';
-            teamDisplayAction = 'got <span class="status">YES</span> on';
+            if(run.isPartiallyCorrect()) {
+                status = 'partially_correct';
+                point_string = "";
+                if(run.score == 1)
+                    point_string = "1 point";
+                else
+                    point_string = (run.score) + " points";
+                teamDisplayAction = 'got <span class="status">' + point_string + '</span> on';
+            }else {
+                status = 'accepted';
+                teamDisplayAction = 'got <span class="status">YES</span> on';
+            }
         }
         else if(run.isPending()) {
             status = 'pending';
@@ -90,6 +109,7 @@ function($, Spotboard) {
             'runId' : run.getId(),
             'problemId' : run.getProblem().getId(),
             'problemName' : problemName,
+            'points': run.getScore(),
             'teamName' : teamName,
             'minute' : run.getTime()
         }));
