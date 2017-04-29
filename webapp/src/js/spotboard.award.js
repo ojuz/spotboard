@@ -280,6 +280,7 @@ function($, Spotboard) {
             }
             return runIntercepted;
         };
+        
         runfeeder.feed(1000000);    // 끝까지 다 feed
 
         $("#wrapper").addClass('award-mode');

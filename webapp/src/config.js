@@ -92,8 +92,6 @@ config =
      * e.g. [1000, 1001, 1002]
      */
     exclude_teams : function(team) {
-        if( [1000, 1001, 1002].indexOf(team.getId()) >= 0 )
-            return true;
         return false;
     },
 
