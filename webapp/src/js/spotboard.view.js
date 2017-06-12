@@ -235,7 +235,6 @@ function($, Handlebars, Spotboard) {
             ranked_teamstats = contest.getRankedTeamStatusList();
         var $teamlist = $('#team-list');
         var teamsInOrder = [];
-
         for(var idx in ranked_teamstats)
         {
             var team = ranked_teamstats[idx].getTeam();
@@ -407,7 +406,7 @@ function($, Handlebars, Spotboard) {
                     if(my_score != 1) {
                         penalty_string += "s";
                     }
-                    penalty_string += ' at '; 
+                    penalty_string += ' at ';
                 }else {
                     penalty_string += "Solved at "
                 }

@@ -133,7 +133,7 @@ function(Spotboard, $)  {
 
             // 애니메이션을 생성한다.
             var animation = updateAnimationFactory(run, remainCount);
-            
+
             // 애니메이션에서 팀이 flip
             var fnUpdateTeamRank = function() {
                 $("#team-list > .team").each( function() {
